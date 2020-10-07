@@ -1,0 +1,15 @@
+%MATLAB
+
+Fs = 100;  %samples/s
+dt = 1/Fs; %seconds/sample
+StopTime = 20;
+t = (0:dt:StopTime-dt)';
+%draw wave
+Fc = 1;   %hertz
+x = 3 * sin(2*pi*Fc*t);
+figure(1);
+plot(t,x);
+axis([0 20 -5 5]);
+grid on
+title('Data Comm Lab6');
+xlabel('time(s)');
