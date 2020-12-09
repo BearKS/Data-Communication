@@ -1,0 +1,33 @@
+import cv2
+import numpy as np
+
+def plot(filename):
+    img = cv2.imread("\\Project_Camera\\ + filename) #import an image
+    img = img[10:120,20:130] #Crop an image
+    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) #Convert an image to grayscale
+
+    frame = '' #สร้างString ขึ้นมาเพื่อรับค่า
+
+
+    ################ find average of Quarter ########################  
+	#gray[y][x] คือการนำภาพที่แปลงเป็น gray scale มาชี้จุดในตำแหน่ง x และ y ที่ต้องการ จะได้ค่าออกมาเป็น int (dtype = int)
+    Quarter1_avg = np.mean((gray[10][15], gray[10][40], gray[40][15], gray[40][40]), dtype=int)
+    Quarter2_avg = np.mean((gray[10][70], gray[10][95], gray[40][70], gray[40][95]), dtype=int)
+    Quarter3_avg = np.mean((gray[60][15], gray[60][40], gray[85][15], gray[85][40]), dtype=int)
+    Quarter4_avg = np.mean((gray[60][70], gray[60][95], gray[85][70], gray[85][95]), dtype=int)
+
+    ################ นำค่าภาพจุดมุม 4 จุดของแต่ละ Quarter และค่าเฉลี่ยที่ได้ มาเก็บเป็น Array
+    Quarter1 = [gray[10][15], gray[10][40], gray[40][15], gray[40][40],Quarter1_avg]
+    Quarter2 = [gray[10][70], gray[10][95], gray[40][70], gray[40][95],Quarter2_avg]
+    Quarter3 = [gray[60][15], gray[60][40], gray[85][15], gray[85][40],Quarter3_avg]
+    Quarter4 = [gray[60][70], gray[60][95], gray[85][70], gray[85][95],Quarter4_avg]
+
+    
+    frame = Quarter2+Quarter4+Quarter1+Quarter3    # นำ Array ของ 4 Quarter มาเรียงต่อกันเพื่อส่งค่าจุด 20 จุด
+    frame.append(0)#เพิ่ม '0' เข้าไปที่ frame เพื่อส่งออก 21 ค่า หมายเหตุ เพื่อให้Arduino ตัดทิ้งตัวที่ 21 เป็นการรับค่า
+    frame = list(map(chr,frame)) #map ทุกตัวใน list เป็น character
+    
+    return str(frame) #return ค่า เป็น String
+    
+if if __name__ == "__main__":
+	print(plot)
